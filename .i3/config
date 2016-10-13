@@ -36,7 +36,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec rofi -show run
 bindsym $mod+Tab exec rofi -show window
 bindsym $mod+Shift+p exec rofi -show ssh
-bindsym $mod+Shift+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
+bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
 bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
 
 # launch categorized menu
@@ -64,7 +64,7 @@ bindsym $mod+F2 exec google-chrome-beta
 bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F6 exec atom
+bindsym $mod+Shift+F6 exec atom
 bindsym $mod+F5 exec terminal -e 'padsp mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
@@ -183,6 +183,7 @@ bindsym $mod+Shift+8 move container to workspace number 8; workspace 8
 # assign [class="Pcmanfm"] 3
 # assign [class="Skype"] 5
 assign [class="Pidgin"] 8
+assign [class="HipChat"] 8
 assign [class="Steam"] 8
 assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 8
 
@@ -221,7 +222,7 @@ for_window [class="google-chrome-beta" window_role="pop-up"] floating enable bor
 for_window [class="Pamac-updater"] floating enable border normal
 for_window [class="Cssh"] floating enable border normal
 for_window [class="NetBeans IDE*"] border normal
-for_window [class="Pidgin"] floating enable border normal
+for_window [class="Pidgin"] border pixel 2
 for_window [class="Wine"] floating enable border normal
 for_window [class="TeamSpeak 3"] border normal
 for_window [class="Steam"] floating enable
@@ -230,10 +231,10 @@ for_window [class="Firewall Builder"] border normal
 for_window [class="libreoffice-*"] border normal
 for_window [class="Gprename"] floating enable border pixel 2
 for_window [class="Cheese"] floating enable border pixel 2
-for_window [class="Pidgin"] floating enable border pixel 2
 for_window [class="Google-chrome-beta" window_role="app"] floating enable border pixel 2
 for_window [class="Google-chrome-beta" window_role="pop-up"] floating enable border pixel 2
 for_window [class="Arandr"] floating enable border pixel 2
+for_window [class="Qpaeq"] floating enable border pixel 2
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -289,7 +290,10 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id normallock
+# Original:
+# bindsym $mod+9 exec --no-startup-id normallock
+
+bindsym $mod+9 exec --no-startup-id xscreensaver-command -lock
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
@@ -339,7 +343,10 @@ exec --no-startup-id compton -b
 # exec --no-startup-id /usr/bin/start_conky_setup
 # exec --no-startup-id start_conky_green
 # Available locks: normallock, blurlock
-exec --no-startup-id xautolock -time 5 -locker normallock
+# Original normallock
+#exec --no-startup-id xautolock -time 5 -locker normallock
+# Xscreensaver
+exec --no-startup-id xscreensaver -nosplash
 exec /usr/bin/google-chrome-beta --no-startup-window
 
 # Theme colors

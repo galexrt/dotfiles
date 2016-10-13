@@ -230,19 +230,19 @@
     appname = Pidgin
     summary = "*signed on*"
     urgency = low
-    timeout = 10
+    timeout = 3
 
 [pidgin_signed_off]
     appname = Pidgin
     summary = *signed off*
     urgency = low
-    timeout = 10
+    timeout = 3
 
 [pidgin_says]
     appname = Pidgin
     summary = *says*
     urgency = critical
-    timeout = 20
+    timeout = 5
 
 #[twitter]
 #    appname = Pidgin
