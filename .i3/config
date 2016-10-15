@@ -309,17 +309,16 @@ bar {
   font pango:Cantarell,Icons 9
   colors {
     separator #666666
-    background #000000
-    statusline #ffffff
-    focused_workspace #551a8b #551a8b #ffffff
+    background #272822
+    statusline #A6E22E
+    focused_workspace #FD971F #FD971F #272822
     active_workspace #333333 #5f676a #ffffff
-    inactive_workspace #000000 #000000 #888888
-    urgent_workspace #2f343a #900000 #ffffff
+    inactive_workspace #272822 #272822 #ffffff
+    urgent_workspace #F92672 #F92672 #ffffff
   }
 }
 
 # Custom
-
 bindsym $mod+Shift+w exec /home/atrost/Scripts/wallpaper-rotator.sh
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
