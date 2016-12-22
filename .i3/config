@@ -48,11 +48,14 @@ bindsym $mod+z exec --no-startup-id morc_menu
 
 #exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id pulseaudio
-exec --no-startup-id pa-applet
+#exec --no-startup-id pulseaudio
+#exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
+exec --no-startup-id /home/atrost/.i3/helper/pa-applet-helper.sh
+
+bindsym $mod+Ctrl+e exec qpaeq
 
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
@@ -152,6 +155,7 @@ bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
@@ -166,6 +170,7 @@ bindsym $mod+Ctrl+5 move container to workspace number 5
 bindsym $mod+Ctrl+6 move container to workspace number 6
 bindsym $mod+Ctrl+7 move container to workspace number 7
 bindsym $mod+Ctrl+8 move container to workspace number 8
+bindsym $mod+Ctrl+9 move container to workspace number 9
 
 # Move to workspace with focused container
 bindsym $mod+Shift+1 move container to workspace number 1; workspace 1
@@ -176,16 +181,19 @@ bindsym $mod+Shift+5 move container to workspace number 5; workspace 5
 bindsym $mod+Shift+6 move container to workspace number 6; workspace 6
 bindsym $mod+Shift+7 move container to workspace number 7; workspace 7
 bindsym $mod+Shift+8 move container to workspace number 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace number 9; workspace 9
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] 1
 # assign [class="Pale moon"] 2
 # assign [class="Pcmanfm"] 3
 # assign [class="Skype"] 5
-assign [class="Pidgin"] 8
-assign [class="HipChat"] 8
+assign [class="Pidgin"] 9
+assign [class="HipChat"] 9
 assign [class="Steam"] 8
-assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 8
+assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 9
+assign [class="Pamac-updater"] 6
+assign [class="Evolution"] 9
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 2
@@ -221,7 +229,7 @@ for_window [class="Keepassx2"] floating enable border normal
 for_window [class="google-chrome-beta" window_role="pop-up"] floating enable border normal
 for_window [class="Pamac-updater"] floating enable border normal
 for_window [class="Cssh"] floating enable border normal
-for_window [class="NetBeans IDE*"] border normal
+for_window [class="NetBeans IDE*"] border pixel 2
 for_window [class="Pidgin"] border pixel 2
 for_window [class="Wine"] floating enable border normal
 for_window [class="TeamSpeak 3"] border normal
@@ -235,7 +243,6 @@ for_window [class="Google-chrome-beta" window_role="app"] floating enable border
 for_window [class="Google-chrome-beta" window_role="pop-up"] floating enable border pixel 2
 for_window [class="Arandr"] floating enable border pixel 2
 for_window [class="Qpaeq"] floating enable border pixel 2
-for_window [class="openshot" title="Tutorial"] floating enable border none
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -292,8 +299,8 @@ mode "resize" {
 
 # Lock screen
 # Original:
-# bindsym $mod+9 exec --no-startup-id normallock
-bindsym $mod+9 exec --no-startup-id xscreensaver-command -lock
+# bindsym Mod1+l exec --no-startup-id normallock
+bindsym Mod1+l exec --no-startup-id xscreensaver-command -lock
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
@@ -319,6 +326,7 @@ bar {
 
 # Custom
 bindsym $mod+Shift+w exec /home/atrost/Scripts/wallpaper-rotator.sh
+
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
@@ -330,23 +338,26 @@ bindsym $mod+minus scratchpad show
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --on-startup-id sranrdrd autorandr --change --default
+#exec --on-startup-id sranrdrd autorandr --change --default
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+#exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
-# exec_always --no-startup-id sbxkb
+#exec_always --no-startup-id sbxkb
 exec --no-startup-id compton -b
-# exec --no-startup-id /usr/bin/start_conky_setup
-# exec --no-startup-id start_conky_green
+exec --no-startup-id razer-service
+exec --no-startup-id /home/atrost/.i3/helper/polychromatic-tray-applet-helper.sh
+exec --no-startup-id /home/atrost/.i3/helper/pulseaudio-helper.sh
+exec --no-startup-id /usr/bin/google-chrome-beta --no-startup-window
+exec --no-startup-id caffeine
+
 # Available locks: normallock, blurlock
 # Original normallock
 #exec --no-startup-id xautolock -time 5 -locker normallock
 # Xscreensaver
 exec --no-startup-id xscreensaver -nosplash
-exec /usr/bin/google-chrome-beta --no-startup-window
 
 # Theme colors
 
@@ -358,7 +369,7 @@ exec /usr/bin/google-chrome-beta --no-startup-window
 #for_window [class="^.*"] border pixel 2
 
 # Set inner/outer gaps
-gaps inner 10
+gaps inner 5
 gaps outer 0
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
