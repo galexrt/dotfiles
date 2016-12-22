@@ -34,7 +34,7 @@ bindsym $mod+Shift+q kill
 
 # start program launcher
 bindsym $mod+d exec rofi -show run
-bindsym $mod+Tab exec rofi -show window
+bindsym Mod1+Tab exec rofi -show window
 bindsym $mod+Shift+p exec rofi -show ssh
 bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
 bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
