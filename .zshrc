@@ -1,10 +1,12 @@
-# Path to your oh-my-zsh installation.
-  export ZSH=/home/atrost/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.bin:/home/$USER/.gem/ruby/2.4.0/bin"
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+# Path to your oh-my-zsh installation.
+ export ZSH=/home/$USER/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="rkj-repos"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -15,10 +17,10 @@ CASE_SENSITIVE="false"
 HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="false"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=12
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
 DISABLE_LS_COLORS="false"
@@ -49,20 +51,40 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git systemd docker common-aliases history-substring-search zsh-syntax-highlighting vagrant)
+plugins=(git systemd docker common-aliases history-substring-search zsh-syntax-highlighting vagrant go)
 
 # User configuration
-
-  export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.cabal/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
+
+# Special zsh settings
+setopt NO_BEEP
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 export TERM='xterm'
 unset BROWSER
+
+# Preferred editor for local and remote sessions
+export EDITOR='vim'
+export VISUAL='vim'
+
+# Github token
+export GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+# Cloudflare token
+export CF_API_KEY="YOUR_CF_API_TOKEN" CF_API_EMAIL="YOUR_CF_EMAIL"
+# Ansible options
+export ANSIBLE_COW_SELECTION=small
+
+# Development and/or Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+export GOPATH="/home/$USER/Projects/workspace/go"
+export PATH="$PATH:$GOPATH/bin"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 #bindkey "^[[2~" yank                    # Insert
 #bindkey "^[[3~" delete-char             # Del
@@ -108,27 +130,25 @@ bindkey '^[[C' forward-char
 bindkey '^[[2~' overwrite-mode
 #################################################
 
-# Preferred editor for local and remote sessions
-export EDITOR='vim'
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Example aliases
+# Set some aliases
 alias zshconfig="vim ~/.zshrc"
 alias sshconfig="vim ~/.ssh/config"
+alias sshknown_hosts="vim ~/.ssh/known_hosts"
 alias i3config="vim ~/.i3/config"
-alias ohmyzsh="mate ~/.oh-my-zsh"
-alias kubectl='kubectl --kubeconfig=/home/atrost/.kube/config '
+alias vimrc="vim ~/.vimrc"
+alias Xresources="vim ~/.Xresources ~/.extend.Xresources"
 
-# FIX STEAM FTW!!
-alias rmbadsteamlibs='find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
-alias rmbadsteamlibslocal='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
+alias kubectl="kubectl --kubeconfig=/home/$USER/.kube/config "
+alias sleep1='sleep 1'
 
-export GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+alias psfaux='ps faux'
+alias psaux='ps aux'
+
+alias pingGDNSA='ping 8.8.8.8'
+alias pingGDNSB='ping 8.8.4.4'
+alias ISMYINTERNETK='ping 8.8.8.8'
+# FIX STEAM THE HARD WAY FTW!!
+alias rmbadsteamlibs='find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete; find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
 
 i3-get-window-criteria() {
     PROGNAME=`basename "$0"`
@@ -171,7 +191,7 @@ makemygopathextreme() {
     export GO15VENDOREXPERIMENT=1
     export GOPATH="$(pwd)"
     export PATH="$PATH:$GOPATH/bin"
-    atom &
+    atom .
 }
 transfer() { 
     # check arguments
@@ -222,7 +242,7 @@ transfer() {
 IMALIVE() {
     ADDRESS="$1"
     while true; do
-        fping -c 1 "$ADDRESS" > /dev/null 2&>1
+        fping -c 1 "$ADDRESS" > /dev/null 2&>1;
         if (($? == 0)); then
             notify-send "=> HOST ALIVE: $ADDRESS" -t 12
             return 0
@@ -232,25 +252,40 @@ IMALIVE() {
 }
 yt-dl-mp3() {
     if [ -z "$1" ]; then
-        return 2;
+        return 2
     fi
-    youtube-dl -x --audio-format mp3 -f bestvideo+bestaudio "$1"
+    youtube-dl -x --audio-format mp3 -f bestvideo+bestaudio --audio-quality 0 "$1"
 }
 mkpasswd() {
     length="$1"
     if [ -z "$length" ]; then
         length="20"
     fi
-    < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$length};echo;
+    < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$length} | sed 's/-/_/';echo;
 }
 initsshkeyaccess() {
-    ssh-add ~/.ssh/atrost@clstersys.de
+    echo "> Adding ssh keys"
+    echo "=> galexrt@github.com"
     ssh-add ~/.ssh/galexrt@github.com
-    ssh-add ~/.ssh/atrost@1and1.com
 }
 FIXTHEFUCKINGCPU() {
     sudo cpupower frequency-set -r -g performance
 }
-CALMDOWNCPU() {
+CALMYOURTITSCPU() {
    sudo cpupower frequency-set -r -g powersave
 }
+killnamed() {
+    if [ -z "$1" ]; then
+        echo "No name to kill given."
+        return 2;
+    fi
+    echo "=> Killing all processes containging \"$1\""
+    for id in $(ps aux | grep "$1" | awk '{ print $2 }'); do
+        echo "-> Killed $id"
+        kill $id 2>&1
+    done
+    echo "=> Done."
+}
+alias toClipboard='xclip -selection c'
+
+ssh-add -l > /dev/null || initsshkeyaccess

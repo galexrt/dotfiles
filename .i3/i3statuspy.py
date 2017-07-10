@@ -1,4 +1,4 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python3
 # coding=utf-8
 from i3pystatus import Status
 
@@ -47,7 +47,7 @@ status.register("load",
 status.register("battery",
     format="{status}{consumption:.2f}W {percentage:.2f}% [{percentage_design:.2f}%] {remaining:%E%hh:%Mm}",
     alert=True,
-    alert_percentage=10,
+    alert_percentage=12,
     status={
         "DIS": "",
         "CHR": "⚡",
@@ -98,7 +98,7 @@ status.register("mem",
 #    path="/var/run/dhclient*.pid",)
 
 status.register("network",
-    interface="eno1",
+    interface="enp0s31f6",
     format_up="{interface}:{v4}",
     on_rightclick="",
     on_upscroll="",
@@ -106,7 +106,7 @@ status.register("network",
 
 # Note: requires both netifaces and basiciw (for essid and quality)
 status.register("network",
-    interface="wlp2s0",
+    interface="wlp1s0",
     format_up="{essid} {quality:03.0f}%",
     on_rightclick="",
     on_upscroll="",
@@ -129,7 +129,7 @@ status.register("openvpn",
 #    },)
 
 status.register("network",
-    interface="eno1",
+    interface="enp0s31f6",
     format_up="{interface}:{kbs}KB/s(▲{bytes_sent}B/{bytes_recv}B▼)",
     ignore_interfaces=['lo','docker0','vpn0'],
     recv_limit=500.0,
