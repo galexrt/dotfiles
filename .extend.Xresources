@@ -22,7 +22,7 @@ Xcursor.size: 14
 URxvt.letterSpace: -3.9
 URxvt.lineSpace: -1
 ! URxvt.font: 9x15
-URxvt.font: xft:Hack Regular:pixelsize=9
+URxvt.font: xft:Hack Regular:pixelsize=8
 ! URxvt.boldFont: xft:Hack Regular:pixelsize=8
 ! Xft.dpi: 96
 Xft.antialias: true

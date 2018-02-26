@@ -35,8 +35,8 @@ bindsym $mod+Shift+q kill
 # start program launcher
 bindsym $mod+d exec rofi -show run
 bindsym Mod1+Tab exec rofi -show window
-bindsym $mod+Shift+p exec rofi -show ssh
 bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
+bindsym $mod+Shift+p exec /usr/bin/rofi-pass
 bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
 
 # launch categorized menu
@@ -81,7 +81,7 @@ bindsym $mod+Shift+Print exec "scrot -se 'mv $f /home/atrost/Screenshots'; notif
 
 # bindsym $mod+Shift+h exec qpdfview i3_help.pdf
 
-focus_follows_mouse yes
+focus_follows_mouse no
 
 # change focus
 bindsym $mod+j focus left
@@ -113,6 +113,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # whole workspace to other desktop
+bindsym $mod+shift+n move workspace to output up
+bindsym $mod+shift+m move workspace to output down
 bindsym $mod+shift+d move workspace to output left
 bindsym $mod+shift+f move workspace to output right
 
@@ -193,12 +195,12 @@ bindsym $mod+Shift+0 move container to workspace number 10; workspace 10
 # assign [class="Pale moon"] 2
 # assign [class="Pcmanfm"] 3
 # assign [class="Skype"] 5
-assign [class="Pidgin"] 9
+assign [class="Pidgin"] 10
 assign [class="HipChat"] 9
 assign [class="Steam"] 8
-assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 9
+assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 10
 assign [class="Pamac-updater"] 6
-assign [class="Evolution"] 9
+assign [class="Evolution"] 10
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 2
@@ -249,6 +251,8 @@ for_window [class="Google-chrome-beta" window_role="pop-up"] floating enable bor
 for_window [class="Arandr"] floating enable border pixel 2
 for_window [class="Qpaeq"] floating enable border pixel 2
 for_window [class="Remmina"] floating enable border normal
+for_window [class="Pinentry"] floating enable border pixel 2
+for_window [class="rdesktop" instance="rdesktop" title="rdesktop - mlanjumper.united.domain"] floating disable border pixel 2
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -264,7 +268,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Set shut down, restart and locking features
 bindsym Mod1+shift+c mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown, (Alt+s)witch_sync
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3exit lock, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
@@ -273,6 +277,7 @@ mode "$mode_system" {
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym Mod1+s exec --no-startup-id /usr/local/bin/switch_sync, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -311,7 +316,6 @@ bindsym Mod1+l exec --no-startup-id blurlock
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-#  status_command i3status
   status_command /usr/bin/python3 /home/atrost/.i3/i3statuspy.py
 #	wheel_up_cmd nop
 #	wheel_down_cmd nop
@@ -319,7 +323,7 @@ bar {
   position bottom
   workspace_buttons yes
   tray_padding 0
-  font pango:Cantarell,Icons 9
+  font pango:Cantarell,Icons 8
   colors {
     separator #666666
     background #272822
@@ -350,8 +354,7 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-#exec --no-startup-id clipit
-exec --no-startup-id blueman-applet
+#exec --no-startup-id blueman-applet
 #exec_always --no-startup-id sbxkb
 exec --no-startup-id compton -b
 exec --no-startup-id /home/atrost/.i3/helper/pulseaudio-helper.sh
@@ -361,13 +364,11 @@ exec --no-startup-id /usr/bin/polychromatic-tray-applet
 
 # Original blurlock
 exec --no-startup-id xautolock \
-    -time 7 \
+    -time 5 \
     -locker blurlock \
-    -detectsleep
-#    -notify 30 \
-#    -notifier "notify-send -u critical -t 8000 -- 'LOCKING screen in 30 seconds'"
-# Xscreensaver
-#exec --no-startup-id xscreensaver -nosplash
+    -detectsleep \
+    -notify 30 \
+    -notifier "notify-send -u normal -t 7500 -- 'Screen lock in 30 seconds'"
 
 # Theme colors
 
@@ -379,7 +380,7 @@ exec --no-startup-id xautolock \
 #for_window [class="^.*"] border pixel 2
 
 # Set inner/outer gaps
-gaps inner 5
+gaps inner 3
 gaps outer 0
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
@@ -390,7 +391,7 @@ gaps outer 0
 # Smart gaps (gaps used if only more than one container on the workspace)
 smart_gaps on
 
-# Smart borders (draw borders around container only if it is not the only container on this workspace) 
+# Smart borders (draw borders around container only if it is not the only container on this workspace)
 # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
 smart_borders on
 
