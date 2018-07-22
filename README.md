@@ -1,2 +1,2 @@
 # dotfiles
-My personal Doty McDotface files.
+My personal doty McDotface files.

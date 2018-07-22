@@ -30,7 +30,9 @@ if [ $# -ne 0 ]; then
             nitrogen --restore
         fi
     fi
-    echo "$1" | sed 's/enable/disable/g' > "$ROFI_SCREENLAY_PREV_LAYOUT"
+    if [ "$1" != "disable.sh" ]; then
+        echo -e "disable.sh\n$1" > "$ROFI_SCREENLAY_PREV_LAYOUT"
+    fi
 else
     cd "$ROFI_SCREENLAY_LOCATION"
     cat "$ROFI_SCREENLAY_PREV_LAYOUT"

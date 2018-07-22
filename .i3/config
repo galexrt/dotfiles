@@ -39,9 +39,6 @@ bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-a
 bindsym $mod+Shift+p exec /usr/bin/rofi-pass
 bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
 
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
-
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
@@ -65,11 +62,10 @@ bindsym $mod+Ctrl+e exec qpaeq
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec google-chrome-beta
-#bindsym $mod+F3 exec pcmanfm
-bindsym $mod+F3 exec urxvt -e ranger
+bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+Shift+F6 exec atom
-bindsym $mod+F5 exec terminal -e 'padsp mocp'
+bindsym $mod+F5 [con_mark="^mindforger$"] scratchpad show
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+u exec "killall dunst; exec notify-send 'dunst restarted'"
@@ -252,7 +248,7 @@ for_window [class="Arandr"] floating enable border pixel 2
 for_window [class="Qpaeq"] floating enable border pixel 2
 for_window [class="Remmina"] floating enable border normal
 for_window [class="Pinentry"] floating enable border pixel 2
-for_window [class="rdesktop" instance="rdesktop" title="rdesktop - mlanjumper.united.domain"] floating disable border pixel 2
+for_window [instance=mindforger] border normal
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -310,7 +306,7 @@ mode "resize" {
 
 # Lock screen
 # blurlock:
-bindsym Mod1+l exec --no-startup-id blurlock
+bindsym Mod1+l exec --no-startup-id /usr/bin/blurlock
 # xscreensaver:
 #bindsym Mod1+l exec --no-startup-id xscreensaver-command -lock
 
@@ -359,10 +355,9 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id compton -b
 exec --no-startup-id /home/atrost/.i3/helper/pulseaudio-helper.sh
 exec --no-startup-id /usr/bin/google-chrome-beta --no-startup-window
-exec --no-startup-id caffeine
-exec --no-startup-id /usr/bin/polychromatic-tray-applet
+exec --no-startup-id /usr/bin/mindforger
+exec --no-startup-id "sleep 2; i3-msg '[instance=mindforger] mark mindforger, move scratchpad'"
 
-# Original blurlock
 exec --no-startup-id xautolock \
     -time 5 \
     -locker blurlock \

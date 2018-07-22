@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git systemd docker common-aliases history-substring-search zsh-syntax-highlighting vagrant go kubectl pass rsync mc)
+plugins=(git systemd docker common-aliases history-substring-search zsh-syntax-highlighting vagrant go kubectl pass rsync minio-mc stern fzf terraform)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -86,9 +86,11 @@ export DOCKER_LOGIN="YOUR_DOCKER_HUB_USERNAME" \
     DOCKER_PASSWORD="YOUR_DOCKER_HUB_PASSWORD"
 
 export GPG_TTY=$(tty)
+
 # Cloudflare token
 export CF_API_KEY="YOUR_CLOUDFLARE_API_KEY" \
     CF_API_EMAIL="YOUR_CLOUDFLARE_API_EMAIL"
+
 # Ansible options
 export ANSIBLE_COW_SELECTION=small
 
@@ -96,6 +98,9 @@ export ANSIBLE_COW_SELECTION=small
 # export ARCHFLAGS="-arch x86_64"
 export GOPATH="/home/atrost/Projects/workspace/go"
 export PATH="$PATH:$GOPATH/bin"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 #bindkey "^[[2~" yank                    # Insert
 #bindkey "^[[3~" delete-char             # Del
@@ -170,7 +175,9 @@ alias bfg='java -jar /home/atrost/Scripts/bfg-1.12.15.jar '
 alias 'git commit'='git commit -s '
 
 i3-get-window-criteria() {
-    PROGNAME=$(basename "$0")
+    PROGNAME=`basename "$0"`
+
+    sleep 1
 
     # Check for xwininfo and xprop
     for cmd in xwininfo xprop; do
@@ -309,7 +316,7 @@ killnamed() {
         return 2;
     fi
     echo "=> Killing all processes containging \"$1\""
-    for id in $(pgrep "$1" | awk '{ print $2 }'); do
+    for id in $(pgrep -f "$1"); do
         echo "-> Killed $id"
         kill $id 2>&1
     done
@@ -335,11 +342,3 @@ forceLoadKernelModules() {
     initgpgkeyaccess;
     touch /tmp/KEY_ACCESS_GRANTED;
 }
-
-# Completions
-source <(stern --completion=zsh)
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null' \
-    FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND" \
-    FZF_DEFAULT_OPTS="--inline-info --height 20% --reverse --border --no-mouse"

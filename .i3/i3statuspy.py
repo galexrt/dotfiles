@@ -185,4 +185,8 @@ status.register("network",
     on_leftclick="",
     graph_width=10,)
 
+status.register("makewatch",
+    running_color="#66D9EF",
+    idle_color="#A6E22E",)
+
 status.run()

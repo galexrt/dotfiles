@@ -68,6 +68,10 @@ URxvt.font-size.step: 1
 URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+
 ! other possible settings:
 ! Rxvt.perl-ext-common: ...,clipboard
 ! URxvt.keysym.M-C-c:   perl:clipboard:copy
