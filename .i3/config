@@ -248,7 +248,8 @@ for_window [class="Arandr"] floating enable border pixel 2
 for_window [class="Qpaeq"] floating enable border pixel 2
 for_window [class="Remmina"] floating enable border normal
 for_window [class="Pinentry"] floating enable border pixel 2
-for_window [instance=mindforger] border normal
+for_window [instance="mindforger"] border normal
+for_window [class="Simple-scan"] floating disable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
