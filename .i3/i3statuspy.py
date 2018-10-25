@@ -189,4 +189,20 @@ status.register("makewatch",
     running_color="#66D9EF",
     idle_color="#A6E22E",)
 
+status.register("taskwarrior",
+    color_ready="#A6E22E",
+    color_urgent="#F92672",
+    enable_mark_done=True,
+    format="Task: {next}",)
+
+status.register("mpd",
+    format="{status} {song_elapsed}/{song_length} {filename}",
+    on_leftclick="switch_playpause",
+    on_doubleleftclick="next_song",
+    on_rightclick=["mpd_command", "stop"],
+    on_doublerightclick="previous_song",
+    on_middleclick=["mpd_command", "shuffle"],
+    on_upscroll=["mpd_command", "seekcur -10"],
+    on_downscroll=["mpd_command", "seekcur +10"],)
+
 status.run()

@@ -55,6 +55,8 @@ exec --no-startup-id /home/atrost/.i3/helper/pa-applet-helper.sh
 
 bindsym $mod+Ctrl+e exec qpaeq
 
+bindsym $mod+q exec /home/atrost/.config/rofi/rofi-commander.sh MAIN && /home/atrost/.config/rofi/rofi-commander.sh
+
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
@@ -107,6 +109,7 @@ bindsym $mod+Shift+Right move right
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+bindsym $mod+Shift+w exec i3-input -F 'workspace %s' -P 'workspace: ' -l 2
 
 # whole workspace to other desktop
 bindsym $mod+shift+n move workspace to output up
@@ -332,17 +335,13 @@ bar {
   }
 }
 
-# Custom
-#bindsym $mod+Shift+w exec /home/atrost/Scripts/wallpaper-rotator.sh
-
 # Make the currently focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+plus mark --add scratch_plus, move scratchpad
+bindsym $mod+Shift+minus mark --add scratch_minus, move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+minus scratchpad show
-
-# Show the sup-mail scratchpad window, if any.
-#bindsym $mod+Shift+s [title="^Sup ::"] scratchpad show
+bindsym $mod+plus [con_mark="^scratch_plus$"] scratchpad show
+bindsym $mod+minus [con_mark="^scratch_minus$"] scratchpad show
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -358,15 +357,12 @@ exec --no-startup-id /home/atrost/.i3/helper/pulseaudio-helper.sh
 exec --no-startup-id /usr/bin/google-chrome-beta --no-startup-window
 exec --no-startup-id /usr/bin/mindforger
 exec --no-startup-id "sleep 2; i3-msg '[instance=mindforger] mark mindforger, move scratchpad'"
-
 exec --no-startup-id xautolock \
     -time 5 \
     -locker blurlock \
     -detectsleep \
     -notify 30 \
     -notifier "notify-send -u normal -t 7500 -- 'Screen lock in 30 seconds'"
-
-# Theme colors
 
 #############################
 ### settings for i3-gaps: ###
@@ -428,7 +424,10 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
+# Theme colors
 client.focused #3b1261 #3b1261 #ffffff #662b9c
 client.focused_inactive #333333 #5f676a #ffffff #484e50
 client.unfocused #222222 #222222 #888888 #292d2e
 client.urgent #2f343a #900000 #ffffff #900000
+
+show_marks yes

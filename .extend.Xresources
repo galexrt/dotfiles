@@ -49,7 +49,9 @@ URxvt.urgentOnBell: 	true
 ! URxvt.keysym.KP_End:  \033[4~
 
 
-URxvt.perl-ext-common: default,matcher,font-size,clipboard
+URxvt.perl-ext-common: default,matcher,font-size,clipboard,keyboard-select
+
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
 
 URxvt.url-launcher: /usr/bin/google-chrome-beta
 URxvt.matcher.button: 1

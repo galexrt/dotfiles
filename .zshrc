@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.bin:/home/atrost/.gem/ruby/2.4.0/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.bin:/home/atrost/.gem/ruby/2.5.0/bin"
 
 # Path to your oh-my-zsh installation.
  export ZSH=/home/atrost/.oh-my-zsh
