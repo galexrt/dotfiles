@@ -5,6 +5,7 @@ My personal doty McDotface files.
 
 * Window Manager + Goodies
     * https://github.com/Airblader/i3
+        * https://github.com/enkore/i3pystatus
     * Rofi
         * https://github.com/DaveDavenport/rofi
             * https://github.com/svenstaro/rofi-calc
