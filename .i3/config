@@ -37,6 +37,7 @@ bindsym $mod+d exec rofi -show run
 bindsym Mod1+Tab exec rofi -show window
 bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
 bindsym $mod+Shift+p exec /usr/bin/rofi-pass
+bindsym $mod+c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort"
 bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
 
 ################################################################################################
@@ -46,12 +47,10 @@ bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atros
 #exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 #exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
+exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
-
-exec --no-startup-id /home/atrost/.i3/helper/pa-applet-helper.sh
 
 bindsym $mod+Ctrl+e exec qpaeq
 
@@ -160,6 +159,16 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+Mod1+1 workspace 11
+bindsym $mod+Mod1+2 workspace 12
+bindsym $mod+Mod1+3 workspace 13
+bindsym $mod+Mod1+4 workspace 14
+bindsym $mod+Mod1+5 workspace 15
+bindsym $mod+Mod1+6 workspace 16
+bindsym $mod+Mod1+7 workspace 17
+bindsym $mod+Mod1+8 workspace 18
+bindsym $mod+Mod1+9 workspace 19
+bindsym $mod+Mod1+0 workspace 20
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
@@ -176,6 +185,16 @@ bindsym $mod+Ctrl+7 move container to workspace number 7
 bindsym $mod+Ctrl+8 move container to workspace number 8
 bindsym $mod+Ctrl+9 move container to workspace number 9
 bindsym $mod+Ctrl+0 move container to workspace number 10
+bindsym $mod+Mod1+Ctrl+1 move container to workspace number 11
+bindsym $mod+Mod1+Ctrl+2 move container to workspace number 12
+bindsym $mod+Mod1+Ctrl+3 move container to workspace number 13
+bindsym $mod+Mod1+Ctrl+4 move container to workspace number 14
+bindsym $mod+Mod1+Ctrl+5 move container to workspace number 15
+bindsym $mod+Mod1+Ctrl+6 move container to workspace number 16
+bindsym $mod+Mod1+Ctrl+7 move container to workspace number 17
+bindsym $mod+Mod1+Ctrl+8 move container to workspace number 18
+bindsym $mod+Mod1+Ctrl+9 move container to workspace number 19
+bindsym $mod+Mod1+Ctrl+0 move container to workspace number 20
 
 # Move to workspace with focused container
 bindsym $mod+Shift+1 move container to workspace number 1; workspace 1
@@ -188,6 +207,16 @@ bindsym $mod+Shift+7 move container to workspace number 7; workspace 7
 bindsym $mod+Shift+8 move container to workspace number 8; workspace 8
 bindsym $mod+Shift+9 move container to workspace number 9; workspace 9
 bindsym $mod+Shift+0 move container to workspace number 10; workspace 10
+bindsym $mod+Shift+Mod1+1 move container to workspace number 11; workspace 11
+bindsym $mod+Shift+Mod1+2 move container to workspace number 12; workspace 12
+bindsym $mod+Shift+Mod1+3 move container to workspace number 13; workspace 13
+bindsym $mod+Shift+Mod1+4 move container to workspace number 14; workspace 14
+bindsym $mod+Shift+Mod1+5 move container to workspace number 15; workspace 15
+bindsym $mod+Shift+Mod1+6 move container to workspace number 16; workspace 16
+bindsym $mod+Shift+Mod1+7 move container to workspace number 17; workspace 17
+bindsym $mod+Shift+Mod1+8 move container to workspace number 18; workspace 18
+bindsym $mod+Shift+Mod1+9 move container to workspace number 19; workspace 19
+bindsym $mod+Shift+Mod1+0 move container to workspace number 20; workspace 20
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] 1
@@ -353,7 +382,6 @@ exec --no-startup-id pamac-tray
 #exec --no-startup-id blueman-applet
 #exec_always --no-startup-id sbxkb
 exec --no-startup-id compton -b
-exec --no-startup-id /home/atrost/.i3/helper/pulseaudio-helper.sh
 exec --no-startup-id /usr/bin/google-chrome-beta --no-startup-window
 exec --no-startup-id /usr/bin/mindforger
 exec --no-startup-id "sleep 2; i3-msg '[instance=mindforger] mark mindforger, move scratchpad'"
