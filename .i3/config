@@ -21,7 +21,8 @@ bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Cantarell 9
+#font pango:Cantarell 9
+font pango:Hack,Icons 8
 
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
@@ -32,13 +33,13 @@ bindsym $mod+Return exec terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start program launcher
-bindsym $mod+d exec rofi -show run
-bindsym Mod1+Tab exec rofi -show window
-bindsym $mod+F6 exec rofi -show atom -modi atom:/home/atrost/.config/rofi/rofi-atom-editor-opener.sh
+# rofi
+bindsym $mod+d exec rofi -theme ~/.config/rofi/breeze-dracula.rasi -show run
+bindsym Mod1+Tab exec rofi -theme ~/.config/rofi/breeze-dracula.rasi -show window
 bindsym $mod+Shift+p exec /usr/bin/rofi-pass
-bindsym $mod+c exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort"
-bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
+bindsym $mod+c exec rofi -theme ~/.config/rofi/breeze-dracula.rasi -show calc -modi calc -no-show-match -no-sort
+bindsym Mod1+Shift+s exec rofi -theme ~/.config/rofi/breeze-dracula.rasi -show screenlayout -modi screenlayout:/home/atrost/.config/rofi/rofi-screenlayout-chooser.sh
+bindsym $mod+q exec /home/atrost/.config/rofi/rofi-commander.sh MAIN && /home/atrost/.config/rofi/rofi-commander.sh
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -54,19 +55,12 @@ bindsym $mod+Ctrl+m exec pavucontrol
 
 bindsym $mod+Ctrl+e exec qpaeq
 
-bindsym $mod+q exec /home/atrost/.config/rofi/rofi-commander.sh MAIN && /home/atrost/.config/rofi/rofi-commander.sh
-
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec google-chrome-beta
+bindsym $mod+F2 exec waterfox-current
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+Shift+F6 exec atom
-bindsym $mod+F5 [con_mark="^mindforger$"] scratchpad show
+bindsym $mod+Shift+F4 exec code
+bindsym $mod+F5 [con_mark="^Joplin$"] scratchpad show
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+u exec "killall dunst; exec notify-send 'dunst restarted'"
@@ -225,7 +219,7 @@ bindsym $mod+Shift+Mod1+0 move container to workspace number 20; workspace 20
 # assign [class="Skype"] 5
 assign [class="Pidgin"] 10
 assign [class="HipChat"] 9
-assign [class="Steam"] 8
+assign [class="Steam"] 18
 assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 10
 assign [class="Pamac-updater"] 6
 assign [class="Evolution"] 10
@@ -280,8 +274,8 @@ for_window [class="Arandr"] floating enable border pixel 2
 for_window [class="Qpaeq"] floating enable border pixel 2
 for_window [class="Remmina"] floating enable border normal
 for_window [class="Pinentry"] floating enable border pixel 2
-for_window [instance="mindforger"] border normal
 for_window [class="Simple-scan"] floating disable
+for_window [class="Joplin"] floating enable border pixel 2
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -306,7 +300,7 @@ mode "$mode_system" {
     bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
     bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-    bindsym Mod1+s exec --no-startup-id /usr/local/bin/switch_sync, mode "default"
+    #bindsym Mod1+s exec --no-startup-id /usr/local/bin/switch_sync, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
@@ -352,7 +346,7 @@ bar {
   position bottom
   workspace_buttons yes
   tray_padding 0
-  font pango:Cantarell,Icons 8
+  #font pango:Cantarell,Icons 8
   colors {
     separator #666666
     background #272822
@@ -374,23 +368,19 @@ bindsym $mod+minus [con_mark="^scratch_minus$"] scratchpad show
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec --on-startup-id sranrdrd autorandr --change --default
-exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
+exec --no-startup-id /home/atrost/.screenlayout/uff.sh
 #exec --no-startup-id blueman-applet
-#exec_always --no-startup-id sbxkb
 exec --no-startup-id compton -b
-exec --no-startup-id /usr/bin/google-chrome-beta --no-startup-window
-exec --no-startup-id /usr/bin/mindforger
-exec --no-startup-id "sleep 2; i3-msg '[instance=mindforger] mark mindforger, move scratchpad'"
-exec --no-startup-id xautolock \
-    -time 5 \
-    -locker blurlock \
-    -detectsleep \
-    -notify 30 \
-    -notifier "notify-send -u normal -t 7500 -- 'Screen lock in 30 seconds'"
+exec --no-startup-id /usr/bin/joplin-desktop
+
+#exec --no-startup-id xautolock \
+#    -time 5 \
+#    -locker blurlock \
+#    -detectsleep \
+#    -notify 30 \
+#    -notifier "notify-send -u normal -t 7500 -- 'Screen lock in 30 seconds'"
 
 #############################
 ### settings for i3-gaps: ###

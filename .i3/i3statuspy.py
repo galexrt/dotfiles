@@ -20,7 +20,8 @@ status.register("clock",
 # Shows pulseaudio default sink volume
 # Note: requires libpulseaudio from PyPI
 status.register("pulseaudio",
-    format="♪{volume}",
+    format="🔊{volume}",
+    format_muted="🔇{volume}",
     color_muted="#F92672",
     color_unmuted="#C8C8C8",)
 
@@ -90,7 +91,7 @@ status.register("uname",
 # Format: 42/128G [86G]
 status.register("disk",
     path="/",
-    format="⛁{avail}G",
+    format="💽{avail}G",
     color="#C8C8C8",
     critical_limit=15,)
 
@@ -122,13 +123,20 @@ status.register("mem",
     warn_color="#fd971f",
     alert_color="#2f343a",)
 
-status.register("swap",
-    format="Swp:{free}MiB",
-    color="#C8C8C8",
-    warn_percentage=70,
-    alert_percentage=85,
-    warn_color="#fd971f",
-    alert_color="#2f343a",)
+#status.register("swap",
+#    format="Swp:{free}MiB",
+#    color="#C8C8C8",
+#    warn_percentage=70,
+#    alert_percentage=85,
+#    warn_color="#fd971f",
+#    alert_color="#2f343a",)
+
+status.register("amdgpu",
+    format="GPU 2: {temp} {mclk} {sclk}",
+    card=1,)
+status.register("amdgpu",
+    format="GPU 1: {temp} {mclk} {sclk}",
+    card=0,)
 
 # Displays whether a DHCP client is running
 #status.register("runwatch",
@@ -136,7 +144,7 @@ status.register("swap",
 #    path="/var/run/dhclient*.pid",)
 
 status.register("network",
-    interface="enp3s0",
+    interface="enp4s0f0",
     color_up="#A6E22E",
     color_down="#F92672",
     format_up="{interface}:{v4}",
@@ -155,23 +163,17 @@ status.register("network",
 #    on_downscroll="",)
 
 status.register("openvpn",
-    format="VPN",
+    format="WG",
+    vpn_name="all",
+    status_command="ip a s | grep wg",)
+
+status.register("openvpn",
+    format="OVPN",
     vpn_name="all",
     status_command="nmcli con | grep -i tun",)
 
-# Shows mpd status
-# Format:
-# Cloud connected▶Reroute to Remain
-#status.register("mpd",
-#    format="{title}{status}{album}",
-#    status={
-#        "pause": "▷",
-#        "play": "▶",
-#        "stop": "◾",
-#    },)
-
 status.register("network",
-    interface="enp3s0",
+    interface="enp4s0f0",
     color_up="#A6E22E",
     color_down="#F92672",
     start_color="#A6E22E",
@@ -185,18 +187,21 @@ status.register("network",
     on_leftclick="",
     graph_width=10,)
 
+status.register("ping",
+    format="{ping}ms",
+    host="8.8.8.8")
+
 status.register("makewatch",
+    format="make",
     running_color="#66D9EF",
     idle_color="#A6E22E",)
 
-status.register("taskwarrior",
-    color_ready="#A6E22E",
-    color_urgent="#F92672",
-    enable_mark_done=True,
-    format="Task: {next}",)
-
 status.register("mpd",
-    format="{status} {song_elapsed}/{song_length} {filename}",
+    format="{status} {song_elapsed}/{song_length} {title}",
+    host="127.0.0.1",
+    port="6600",
+    max_len=150,
+    max_field_len=45,
     on_leftclick="switch_playpause",
     on_doubleleftclick="next_song",
     on_rightclick=["mpd_command", "stop"],

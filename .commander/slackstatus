@@ -883,7 +883,7 @@ EMOJIS=(
 cleanup() {
   rm -f /tmp/rofi-slackstatus-state
 }
-trap onexit 1 2 3 15 ERR
+trap cleanup 1 2 3 15 ERR
 
 print_error() {
     printf "Error: %s" "$*"
@@ -893,8 +893,9 @@ update_slack_status () {
     local token="$1"
     local emoji="$2"
     local stext="$3"
+    local response
 
-    local response=$(curl -s -S -X POST \
+    response=$(curl -s -S -X POST \
             -d "token=$token" \
             --data-urlencode "profile={\"status_text\": \"$stext\", \"status_emoji\": \"$emoji\"}" \
             https://slack.com/api/users.profile.set \
@@ -919,7 +920,7 @@ if [ -f "$OPT_CONF" ]; then
     source "$OPT_CONF"
 else
     print_error "config $OPT_CONF not found."
-    exit -1
+    exit 1
 fi
 
 ################################################################
@@ -981,7 +982,7 @@ for TEAM in "${TEAMS[@]}"; do
     if [ -z "$TOKEN" ]; then
         print_error "No API Token found for $TEAM in $OPT_CONF."
         cleanup
-        exit -1
+        exit 1
     fi
 
     ################################################################

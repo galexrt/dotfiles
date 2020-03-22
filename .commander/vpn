@@ -1,0 +1,44 @@
+#!/bin/bash
+
+STATE_FILE="/tmp/rofi-vpn-state"
+
+cleanup() {
+  rm -f "$STATE_FILE"
+}
+trap cleanup 1 2 3 15 ERR
+
+source "$STATE_FILE"
+
+if [ -z "$CUR_DIR" ]; then
+    cat <<EOF > "$STATE_FILE"
+export CUR_DIR="$HOME/.vpn"
+EOF
+fi
+
+cd "$CUR_DIR" || exit 1
+
+if [ -d "$1" ]; then
+    cat <<EOF > "$STATE_FILE"
+export CUR_DIR="$CUR_DIR/$1"
+EOF
+elif [ -f "$1" ]; then
+    case "${1##*.}" in
+        ovpn)
+            exec urxvt -e sudo /usr/bin/openvpn "$CUR_DIR/$1"
+        ;;
+    esac
+fi
+
+source "$STATE_FILE"
+
+cd "$CUR_DIR" || exit 1
+
+if [[ -n "$1" ]]; then
+    echo ".."
+fi
+
+for entry in ./*; do
+  basename "$entry"
+done
+
+exit 0
