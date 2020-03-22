@@ -66,11 +66,10 @@ bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+u exec "killall dunst; exec notify-send 'dunst restarted'"
 
 # Screenshot hotkeys
-bindsym Print exec "scrot -e 'mv $f /home/atrost/Screenshots'; sleep 1; exec notify-send 'screenshot has been saved to ~/Screenshots'"
-bindsym $mod+Print exec "scrot -ue 'mv $f /home/atrost/Screenshots'; exec notify-send 'screenshot has been saved to ~/Screenshots'"
-bindsym $mod+Shift+Print exec "scrot -se 'mv $f /home/atrost/Screenshots'; notify-send 'selection will be saved to ~/Screenshots'"
-
-# bindsym $mod+Shift+h exec qpdfview i3_help.pdf
+bindsym Print exec "~/.bin/screenshotrecctl everything"
+bindsym $mod+Print exec "~/.bin/screenshotrecctl focused"
+bindsym $mod+Shift+Print exec "~/.bin/screenshotrecctl selection"
+bindsym $mod+Ctrl+Print exec "~/.bin/screenshotrecctl record"
 
 focus_follows_mouse no
 
@@ -276,6 +275,7 @@ for_window [class="Remmina"] floating enable border normal
 for_window [class="Pinentry"] floating enable border pixel 2
 for_window [class="Simple-scan"] floating disable
 for_window [class="Joplin"] floating enable border pixel 2
+for_window [class="Lua5.3" title="Preview"] floating enable border pixel 2
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus

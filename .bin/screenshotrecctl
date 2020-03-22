@@ -1,0 +1,36 @@
+#!/bin/bash
+# shellcheck disable=SC2016
+
+baseCommand="mv \$f /home/atrost/Screenshots"
+notificationSummary='📸 screenshotrecctl'
+
+if [ ! -d ~/Screenshots ]; then
+    mkdir -p ~/Screenshots
+fi
+
+case "$1" in
+    everything)
+        COMMAND="$baseCommand; notify-send '$notificationSummary' 'whole screen saved to ~/Screenshots\$f'"
+        sleep 0.2
+        scrot -m -e "$COMMAND"
+    ;;
+    focused)
+        COMMAND="$baseCommand; notify-send '$notificationSummary' 'focused window saved to ~/Screenshots/\$f'"
+        sleep 0.2
+        scrot -u -e "$COMMAND"
+    ;;
+    selection)
+        COMMAND="$baseCommand; notify-send '$notificationSummary' 'selection saved to ~/Screenshots/\$f'"
+        sleep 0.2
+        scrot -s -f -e "$COMMAND"
+    ;;
+    record)
+        notify-send "$notificationSummary" 'starting gifine for screen record'
+        gifine
+        i3-input -F 'exec --no-startup-id rm -rf /tmp/gifine_*' -P 'delete gifine temp dirs? Enter or ESC'
+    ;;
+    *)
+        notify-send "$notificationSummary" "not argument given to $1"
+        exit 1
+    ;;
+esac

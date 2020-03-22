@@ -11,7 +11,7 @@ source "$STATE_FILE"
 
 if [ -z "$CUR_DIR" ]; then
     cat <<EOF > "$STATE_FILE"
-export CUR_DIR="$HOME/.vpn"
+export CUR_DIR="$HOME/.config/vpns"
 EOF
 fi
 
