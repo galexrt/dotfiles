@@ -203,7 +203,7 @@ status.register("makewatch",
     idle_color="#A6E22E",)
 
 status.register("mpd",
-    format="{status}{song_elapsed}/{song_length} {title}",
+    format="{status}{song_elapsed}/{song_length} {title}/{album}",
     status={'play': '⏯️', 'stop': '⏹️', 'pause': '⏸️'},
     host="127.0.0.1",
     port="6600",
