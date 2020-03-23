@@ -26,8 +26,7 @@ case "$1" in
     ;;
     record)
         notify-send "$notificationSummary" 'starting gifine for screen record'
-        gifine
-        i3-input -F 'exec --no-startup-id rm -rf /tmp/gifine_*' -P 'delete gifine temp dirs? Enter or ESC'
+        GDK_BACKEND=x11 peek
     ;;
     *)
         notify-send "$notificationSummary" "not argument given to $1"

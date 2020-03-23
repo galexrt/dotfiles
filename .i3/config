@@ -38,8 +38,8 @@ bindsym $mod+d exec rofi -show run
 bindsym Mod1+Tab exec rofi -show window
 bindsym $mod+Shift+p exec /usr/bin/rofi-pass
 bindsym $mod+c exec rofi -show calc -no-show-match -no-sort
-bindsym Mod1+Shift+s exec rofi -show screenlayout -modi screenlayout:~/.config/rofi/rofi-screenlayout-chooser.sh
-bindsym $mod+q exec /home/atrost/.config/rofi/rofi-commander.sh MAIN && /home/atrost/.config/rofi/rofi-commander.sh
+bindsym Mod1+Shift+s exec rofi -show screenlayout
+bindsym $mod+q exec ~/.config/rofi/rofi-commander.sh MAIN && ~/.config/rofi/rofi-commander.sh
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
@@ -216,12 +216,8 @@ bindsym $mod+Shift+Mod1+0 move container to workspace number 20; workspace 20
 # assign [class="Pale moon"] 2
 # assign [class="Pcmanfm"] 3
 # assign [class="Skype"] 5
-assign [class="Pidgin"] 10
-assign [class="HipChat"] 9
 assign [class="Steam"] 18
-assign [class="Google-chrome-beta" window_role="pop-up" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] 10
-assign [class="Pamac-updater"] 6
-assign [class="Evolution"] 10
+assign [title="Microsoft Teams Notification"] 20
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 2
@@ -230,7 +226,6 @@ for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
 for_window [class="Galculator"] floating enable border pixel 2
 for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
 for_window [class="Lightdm-gtk-greeter-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="manjaro-settings-manager-gui"] floating enable border normal
@@ -275,7 +270,7 @@ for_window [class="Remmina"] floating enable border normal
 for_window [class="Pinentry"] floating enable border pixel 2
 for_window [class="Simple-scan"] floating disable
 for_window [class="Joplin"] floating enable border pixel 2
-for_window [class="Lua5.3" title="Preview"] floating enable border pixel 2
+for_window [title="Microsoft Teams Notification"] floating enable border none
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -339,7 +334,7 @@ bindsym Mod1+l exec --no-startup-id /usr/bin/blurlock
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-  status_command /usr/bin/python3 /home/atrost/.i3/i3statuspy.py
+  status_command /usr/bin/python3 ~/.i3/i3statuspy.py
 #	wheel_up_cmd nop
 #	wheel_down_cmd nop
   height 20
@@ -370,7 +365,7 @@ bindsym $mod+minus [con_mark="^scratch_minus$"] scratchpad show
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
-exec --no-startup-id /home/atrost/.screenlayout/uff.sh
+exec --no-startup-id ~/.screenlayout/uff.sh
 #exec --no-startup-id blueman-applet
 exec --no-startup-id compton -b
 exec --no-startup-id /usr/bin/joplin-desktop
