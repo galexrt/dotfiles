@@ -1,3 +1,4 @@
+
 __stern_bash_source() {
     alias shopt=':'
     alias _expand=_bash_expand

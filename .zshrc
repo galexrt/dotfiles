@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git systemd docker common-aliases history-substring-search zsh-syntax-highlighting vagrant go kubectl pass rsync minio-mc stern fzf terraform)
+plugins=(git systemd docker common-aliases history-substring-search vagrant go kubectl pass rsync minio-mc stern fzf terraform)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -206,63 +206,6 @@ i3-get-window-criteria() {
                 -e "/^_NET_WM_NAME\(UTF8_STRING\) = ($match_qstring)$/{s//title=\1/; h}" \
                 -e '${g; p}'
     } | sort | tr "\n" " " | sed -r 's/^(.*) $/[\1]\n/'
-}
-makemygopath() {
-    export GO15VENDOREXPERIMENT=1
-    export GOPATH="$(pwd)"
-    export PATH="$PATH:$GOPATH/bin"
-}
-makemygopathextreme() {
-    export GO15VENDOREXPERIMENT=1
-    export GOPATH="$(pwd)"
-    export PATH="$PATH:$GOPATH/bin"
-    atom .
-}
-transfer() {
-    # check arguments
-    if [ $# -eq 0 ];
-    then
-        echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
-        return 1
-    fi
-
-    # get temporarily filename, output is written to this file show progress can be showed
-    tmpfile=$( mktemp -t transferXXX )
-
-    # upload stdin or file
-    file=$1
-
-    if tty -s;
-    then
-        basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
-
-        if [ ! -e $file ];
-        then
-            echo "File $file doesn't exists."
-            return 1
-        fi
-
-        if [ -d $file ];
-        then
-            # zip directory and transfer
-            zipfile=$( mktemp -t transferXXX.zip )
-            cd $(dirname $file) && zip -r -q - $(basename $file) >> $zipfile
-            curl --progress-bar --upload-file "$zipfile" "https://transfer.sh/$basefile.zip" >> $tmpfile
-            rm -f $zipfile
-        else
-            # transfer file
-            curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> $tmpfile
-        fi
-    else
-        # transfer pipe
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$file" >> $tmpfile
-    fi
-
-    # cat output link
-    cat $tmpfile
-
-    # cleanup
-    rm -f $tmpfile
 }
 IMALIVE() {
     ADDRESS="$1"
