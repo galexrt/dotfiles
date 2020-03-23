@@ -44,7 +44,7 @@ status.register("load",
     color="#C8C8C8",)
 
 status.register("uptime",
-    format="up {hours}:{mins}",
+    format="⏰ {hours}:{mins}",
     alert=True,
     seconds_alert=1209600,
     color="#C8C8C8",
@@ -68,9 +68,9 @@ status.register("uname",
 #    alert=True,
 #    alert_percentage=12,
 #    status={
-#        "DIS": "",
-#        "CHR": "⚡",
-#        "FULL": "☻",
+#        "DIS": "⚡",
+#        "CHR": "🔌",
+#        "FULL": "🔋",
 #    },
 #    color="#C8C8C8",)
 
@@ -132,10 +132,10 @@ status.register("mem",
 #    alert_color="#2f343a",)
 
 status.register("amdgpu",
-    format="GPU 2: {temp} {mclk} {sclk}",
+    format="GPU2:{temp} {mclk} {sclk}",
     card=1,)
 status.register("amdgpu",
-    format="GPU 1: {temp} {mclk} {sclk}",
+    format="GPU1:{temp} {mclk} {sclk}",
     card=0,)
 
 # Displays whether a DHCP client is running
@@ -162,23 +162,13 @@ status.register("network",
 #    on_upscroll="",
 #    on_downscroll="",)
 
-status.register("openvpn",
-    format="WG",
-    vpn_name="all",
-    status_command="ip a s | grep wg",)
-
-status.register("openvpn",
-    format="OVPN",
-    vpn_name="all",
-    status_command="nmcli con | grep -i tun",)
-
 status.register("network",
     interface="enp4s0f0",
     color_up="#A6E22E",
     color_down="#F92672",
     start_color="#A6E22E",
     end_color="#F92672",
-    format_up="{interface}:▲{bytes_sent}B/{bytes_recv}B▼ {network_graph_recv}",
+    format_up="{interface}:🔺{bytes_sent}B/{bytes_recv}B🔻 {network_graph_recv}",
     format_down="{interface}:DOWN",
     ignore_interfaces=['lo','docker0','vpn0'],
     recv_limit=500.0,
@@ -188,8 +178,24 @@ status.register("network",
     graph_width=10,)
 
 status.register("ping",
-    format="{ping}ms",
-    host="8.8.8.8")
+    format="🏓{ping}ms",
+    host="8.8.8.8",
+    latency_threshold=35,
+    color_bad="#F92672",)
+
+status.register("openvpn",
+    format="{status}",
+    status_down="⚪🟥",
+    status_up="⚪🛡️",
+    vpn_name="all",
+    status_command="ip a s | grep wg",)
+
+status.register("openvpn",
+    format="{status}",
+    status_down="🟠🟥",
+    status_up="🟠🛡️",
+    vpn_name="all",
+    status_command="nmcli con | grep -q -i tun",)
 
 status.register("makewatch",
     format="make",
@@ -197,7 +203,8 @@ status.register("makewatch",
     idle_color="#A6E22E",)
 
 status.register("mpd",
-    format="{status} {song_elapsed}/{song_length} {title}",
+    format="{status}{song_elapsed}/{song_length} {title}",
+    status={'play': '⏯️', 'stop': '⏹️', 'pause': '⏸️'},
     host="127.0.0.1",
     port="6600",
     max_len=150,
