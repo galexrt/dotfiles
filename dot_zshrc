@@ -1,0 +1,93 @@
+# Use powerline
+USE_POWERLINE="true"
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+  source /usr/share/zsh/manjaro-zsh-prompt
+fi
+
+CASE_SENSITIVE="false"
+HYPHEN_INSENSITIVE="true"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+
+HIST_STAMPS="yyyy-mm-dd"
+setopt hist_ignore_space
+HISTSIZE=10000
+SAVEHIST=10000
+
+plugins=(git systemd docker common-aliases golang kubectl rsync pass fzf beets)
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+export FZF_DEFAULT_OPTS="--layout=reverse --inline-info --height 30%"
+
+export GPG_TTY=$(tty)
+
+source ~/.secrets
+
+# Ansible options
+export ANSIBLE_COW_SELECTION=small
+
+# Development and/or Compilation flags
+export GOPATH="/home/atrost/Projects/go" \
+  GO111MODULE=on
+
+mkpasswd() {
+    length="$1"
+    if [ -z "$length" ]; then
+        length="20"
+    fi
+    < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$length} | sed 's/-/_/';echo;
+}
+killnamed() {
+    if [ -z "$1" ]; then
+        echo "No name to kill given."
+        return 2;
+    fi
+    echo "=> Killing all processes containing \"$1\""
+    for id in $(pgrep -f "$1"); do
+        echo "-> Killed $id"
+        kill $id 2>&1
+    done
+    echo "=> Done."
+}
+
+initsshkeyaccess() {
+    echo "> Adding ssh keys"
+    echo "-> atrost@clstersys.de"
+    ssh-add ~/.ssh/atrost@clstersys.de
+    echo "-> galexrt@github.com"
+    ssh-add ~/.ssh/galexrt@github.com
+    echo "-> atrost@cloudibility.io"
+    ssh-add ~/.ssh/atrost@cloudibility.io
+    echo "> Added ssh keys."
+}
+initgpgkeyaccess() {
+    echo "> Unlocking GPG keys"
+    for key in "9F1DD4D9A0F27479" "5CF1D4600D4CBFDF"; do
+        echo "-> $key"
+        echo "1234" | gpg -o /dev/null --local-user "$key" -as - && echo "-> $key unlocked"
+    done
+    echo "> Unlocked GPG keys."
+}
+
+[ -f /tmp/KEY_ACCESS_GRANTED ] || {
+    initsshkeyaccess;
+    initgpgkeyaccess;
+    touch /tmp/KEY_ACCESS_GRANTED;
+}
+
+alias code="codium"
+alias zshconfig="vim ~/.zshrc"
+alias sshconfig="vim ~/.ssh/config"
+alias sshknown_hosts="vim ~/.ssh/known_hosts"
+alias kubeconfig="vim ~/.kube/config"
+alias ISMYINTERNETK='ping 8.8.8.8'
+alias yt-dl-mp3='yt-dlp -x --audio-format mp3 -f bestvideo+bestaudio --audio-quality 0 '
+
+export PATH="$PATH:$GOPATH/bin:$HOME/.krew/bin"

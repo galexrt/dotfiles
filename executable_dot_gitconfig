@@ -1,0 +1,28 @@
+[user]
+	email = galexrt@googlemail.com
+	name = Alexander Trost
+	signingkey = 5CF1D4600D4CBFDF
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = true
+[diff]
+	renameLimit = 3500
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential]
+	helper = cache --timeout=3600
+[alias]
+	bclean = "!git fetch -p && for branch in $(git branch -vv | gawk '{print $1,$4}' | awk '/ gone]/{if ($1!=\"*\") print $1}'); do git branch -D $branch; done && echo 'Removed branches without remote anymore.'"
+	conflicts = diff --name-only --diff-filter=U
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[advice]
+	addEmptyPathspec = false
