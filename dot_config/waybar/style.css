@@ -1,0 +1,19 @@
+@import "/usr/share/sway/templates/waybar/style.css";
+
+window#waybar {
+    padding: 0;
+    margin: 0;
+}
+
+#waybar {
+    background: #272822;
+}
+
+* {
+    font-family: Hack, monospace;
+    font-size: 10px;
+}
+
+#workspaces button.urgent {
+    color: #900000;
+}

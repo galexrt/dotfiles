@@ -1,0 +1,12 @@
+{
+    "include": [
+        "/usr/share/sway/templates/waybar/config.jsonc"
+    ],
+    "height": 20,
+    "position": "bottom",
+    "enable-bar-scroll": true,
+    "clock": {
+        "interval": 1,
+	"format": "{:%H:%M:%S %d-%m-%Y}"
+    }
+}
