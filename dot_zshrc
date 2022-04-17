@@ -63,8 +63,6 @@ initsshkeyaccess() {
     ssh-add ~/.ssh/atrost@clstersys.de
     echo "-> galexrt@github.com"
     ssh-add ~/.ssh/galexrt@github.com
-    echo "-> atrost@cloudibility.io"
-    ssh-add ~/.ssh/atrost@cloudibility.io
     echo "> Added ssh keys."
 }
 initgpgkeyaccess() {
